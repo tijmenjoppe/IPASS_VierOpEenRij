@@ -12,7 +12,6 @@ gameDisplay.convert()
 
 
 def printMouseCoordinates(position):
-    pg.draw.circle(position, 50)
     gameDisplay.fill(white)
     mouseFont = pg.font.SysFont("Helvetica", 32)
     mouseLabel = mouseFont.render(str(position), 1, (0, 255,255))

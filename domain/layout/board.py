@@ -1,27 +1,38 @@
-
+import pygame as pg
+import sys
+from pygame.locals import *
+import numpy as np
 
 class Board:
 
     def __init__(self):
-        pass
+        self.black = (0, 0, 0)
+        self.white = (255, 255, 255)
+        pg.init()
 
     def create_canvas(self):
         ''' Maak hiermee een doek aan om de game op te maken.'''
-        pass
-
-    def draw_lines(self):
-        ''' maak hier de 42 vakken op het doek'''
-        pass
-
-    def draw_cricles(self):
-        '''maak hier circles van de 42 vakken '''
-        pass
+        gameDisplay = pg.display.set_mode((1000, 800))
+        gameDisplay.fill(self.white)
+        gameDisplay.convert()
+        pg.display.set_caption("Connect Four")
+        return gameDisplay
 
     def first_screen(self):
-        '''zoek een afbeelding die als eerst wordt laten zien'''
-        pass
+        initiating_window = pg.image.load("vieropeenrijcoveredit.png")
+        initiating_window = pg.transform.scale(initiating_window, (1000, 800))
+        self.create_canvas().blit(initiating_window, (0, 0))
+        pg.display.update()
 
-    def colour(self):
-        ''' kleur alles in en maak het mooi (optioneel) '''
-        pass
+
+    def board(self):
+        board = np.zeros((6,7))
+        return board
+
+    def draw_board(self, board):
+
+        for i in range(board.)
+
+
+
 
