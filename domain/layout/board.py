@@ -39,9 +39,14 @@ class Board:
                 pg.draw.rect(self.gameDisplay, self.blue, (i * 100, j * 100 + 100, 100, 100))
                 pg.draw.circle(self.gameDisplay, self.black, (x, y), 100/2-5)
 
-        if player == 1:
+        for i in range(7):
+            x = i * 100 + 100 / 2
+            y = 100/ 2
+            if player == 1:
+                pg.draw.circle( self.gameDisplay, self.red, (x, y), 100 / 2 - 5 )
+            if player == 2:
+                pg.draw.circle( self.gameDisplay, self.yellow, (x, y), 100 / 2 - 5 )
 
-        if player == 2:
 
 
 

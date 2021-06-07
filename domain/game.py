@@ -12,11 +12,12 @@ class Game:
         self.rl = rules.Rules()
 
     def connect_four_game(self):
-
+        board = self.bd.board()
+        player = None
         pg.init()
         self.bd.first_screen()
 
-        self.bd.draw_board()
+        self.bd.draw_board(board, player)
         pg.display.update()
 
         while True:
