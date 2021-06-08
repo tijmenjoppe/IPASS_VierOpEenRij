@@ -29,7 +29,6 @@ class Board:
         self.gameDisplay.fill(self.black)
 
     def draw_board(self, board, player):
-        np.flip(board, 0)
         for i in range(7):
             for j in range(6):
                 x = i * 100 + 100 / 2
@@ -50,12 +49,16 @@ class Board:
                 x = i * 100 + 100 / 2
                 y = j * 100 + 100 + 100 / 2
                 if board[j][i] == 1:
-                    pg.draw.circle(self.gameDisplay, self.red, (x, y), 100 / 2 - 5)
+                    pg.draw.circle(self.gameDisplay, self.red, (x, 800-y), 100 / 2 - 5)
                 if board[j][i] == 2:
-                    pg.draw.circle( self.gameDisplay, self.yellow, (x, y), 100 / 2 - 5)
+                    pg.draw.circle( self.gameDisplay, self.yellow, (x, 800- y), 100 / 2 - 5)
 
         pg.display.update()
 
+    def error_message(self):
+        lettertype = pg.font.SysFont( "monospace", 60 )
+        label = lettertype.render( "Not possible", 1, self.white )
+        self.gameDisplay.blit( label, (40, 10) )
 
 
 

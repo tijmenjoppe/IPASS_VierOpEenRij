@@ -13,15 +13,31 @@ class Game:
         self.board = np.zeros((6, 7))
         self.player = 0
 
-    def player(self):
-        ''' maak 2 spelers '''
-        pass
 
-    def win(self):
-        ''' wie wint er en hoe kun je winnen'''
-        pass
+    def win(self, player):
 
-    def player_click(self, posx, posy, board, player):
+        board = self.board
+        for i in range(7):
+            for j in range(6):
+                if board[j][i] == board[j][i+1] and board[j][i+1] == board[j][i+2] and board[j][i+2] == board[j][i+3] and board[j][i] == player:
+                    return self.player
+
+        for i in range(7):
+            for j in range(6):
+                if board[j][i] == board[j+1][i] and board[j+1][i] == board[j+2][i] and board[j+2][i] == board[j+3][i] and board[j][i] == player:
+                    return self.player
+
+        for i in range(7):
+            for j in range(6):
+                if board[j][i] == board[j+1][i+1] and board[j+1][i+1] == board[j+2][i+2] and board[j+2][i+2] == board[j+3][i+3] and board[j][i] == player:
+                    return self.player
+
+        for i in range(7):
+            for j in range(6):
+                if board[j][i] == board[j-1][i-1] and board[j-1][i-1] == board[j-2][i-2] and board[j-2][i-2] == board[j-3][i-3] and board[j][i] == player:
+                        return self.player
+
+    def player_click(self, posx, board, player):
         if posx < 100:
             self.move(player, 0, self.last_open_position(board, 0))
         elif posx < 200 and posx > 100:
@@ -43,7 +59,6 @@ class Game:
                 return index
 
     def move(self, player, x, y):
-        print(player, x, y)
         self.board[int(y)][x] = player
 
     def connect_four_game(self):
@@ -62,16 +77,19 @@ class Game:
                 if event.type == pg.MOUSEBUTTONDOWN:
                     posx, posy = pg.mouse.get_pos()
                     if self.player == 1:
+                        # red
                         self.bd.print_board(self.board)
-                        self.player_click(posx, posy, self.board, self.player )
-
-                        #red
+                        self.player_click(posx, self.board, self.player )
                         self.bd.draw_board(self.board, self.player)
+                        if self.win(self.player) == 1:
+                            print("red wins")
                     else:
+                        # yellow
                         self.player = 2
-                        self.player_click(posx, posy, self.board, self.player)
-                        #yellow
+                        self.player_click(posx, self.board, self.player)
                         self.bd.draw_board(self.board, self.player )
+                        if self.win(self.player) == 2:
+                            print("yellow wins")
 
                     self.player += 1
                     self.player = self.player % 2
