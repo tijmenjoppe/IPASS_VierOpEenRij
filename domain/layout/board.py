@@ -40,9 +40,9 @@ class Board:
             x = i * 100 + 100 / 2
             y = 100 / 2
             if player == 1:
-                pg.draw.circle( self.gameDisplay, self.red, (x, y), 100 / 2 - 5 )
+                pg.draw.circle( self.gameDisplay, self.red, (x, y), 100 / 2 - 5)
             if player == 2:
-                pg.draw.circle( self.gameDisplay, self.yellow, (x, y), 100 / 2 - 5 )
+                pg.draw.circle( self.gameDisplay, self.yellow, (x, y), 100 / 2 - 5)
 
         for i in range(7):
             for j in range(6):
@@ -51,7 +51,7 @@ class Board:
                 if board[j][i] == 1:
                     pg.draw.circle(self.gameDisplay, self.red, (x, 800-y), 100 / 2 - 5)
                 if board[j][i] == 2:
-                    pg.draw.circle( self.gameDisplay, self.yellow, (x, 800- y), 100 / 2 - 5)
+                    pg.draw.circle( self.gameDisplay, self.yellow, (x, 800-y), 100 / 2 - 5)
 
         pg.display.update()
 

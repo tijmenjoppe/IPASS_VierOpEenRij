@@ -15,26 +15,25 @@ class Game:
 
 
     def win(self, player):
-
-        board = self.board
+        b = self.board
         for i in range(7-3):
             for j in range(6):
-                if board[j][i] == board[j][i+1] and board[j][i+1] == board[j][i+2] and board[j][i+2] == board[j][i+3] and board[j][i] == player:
+                if b[j][i] == b[j][i+1] and b[j][i+1] == b[j][i+2] and b[j][i+2] == b[j][i+3] and b[j][i] == player:
                     return self.player
 
         for i in range(7):
             for j in range(6-3):
-                if board[j][i] == board[j+1][i] and board[j+1][i] == board[j+2][i] and board[j+2][i] == board[j+3][i] and board[j][i] == player:
+                if b[j][i] == b[j+1][i] and b[j+1][i] == b[j+2][i] and b[j+2][i] == b[j+3][i] and b[j][i] == player:
                     return self.player
 
         for i in range(7-3):
             for j in range(6-3):
-                if board[j][i] == board[j+1][i+1] and board[j+1][i+1] == board[j+2][i+2] and board[j+2][i+2] == board[j+3][i+3] and board[j][i] == player:
+                if b[j][i] == b[j+1][i+1] and b[j+1][i+1] == b[j+2][i+2] and b[j+2][i+2] == b[j+3][i+3] and b[j][i] == player:
                     return self.player
 
         for i in range(7-3):
             for j in range(3, 6):
-                if board[j][i] == board[j-1][i+1] and board[j-1][i+1] == board[j-2][i+2] and board[j-2][i+2] == board[j-3][i+3] and board[j][i] == player:
+                if b[j][i] == b[j-1][i+1] and b[j-1][i+1] == b[j-2][i+2] and b[j-2][i+2] == b[j-3][i+3] and b[j][i] == player:
                         return self.player
 
     def player_click(self, posx, board, player):
@@ -49,17 +48,21 @@ class Game:
         elif posx < 500 and posx > 400:
             self.move(player, 4, self.last_open_position(board, 4))
         elif posx < 600 and posx > 500:
-            print('used')
             self.move(player, 5, self.last_open_position(board, 5))
+        elif posx < 700 and posx > 600:
+            self.move(player, 6, self.last_open_position(board, 6))
 
     def last_open_position(self, board, x):
-        for index, row in enumerate( board ):
+        for index, row in enumerate(board):
+            print(index,row[x])
             if row[x] == 1 or row[x] == 2:
                 continue
             else:
                 return index
 
     def move(self, player, x, y):
+        if y == None:
+            return -1
         self.board[int(y)][x] = player
 
     def connect_four_game(self):
