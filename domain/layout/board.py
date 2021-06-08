@@ -58,7 +58,7 @@ class Board:
     def error_message(self):
         lettertype = pg.font.SysFont( "monospace", 60 )
         label = lettertype.render( "Not possible", 1, self.white )
-        self.gameDisplay.blit( label, (40, 10) )
+        self.gameDisplay.blit(label, (40, 10))
 
 
 

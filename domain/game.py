@@ -17,24 +17,24 @@ class Game:
     def win(self, player):
 
         board = self.board
-        for i in range(7):
+        for i in range(7-3):
             for j in range(6):
                 if board[j][i] == board[j][i+1] and board[j][i+1] == board[j][i+2] and board[j][i+2] == board[j][i+3] and board[j][i] == player:
                     return self.player
 
         for i in range(7):
-            for j in range(6):
+            for j in range(6-3):
                 if board[j][i] == board[j+1][i] and board[j+1][i] == board[j+2][i] and board[j+2][i] == board[j+3][i] and board[j][i] == player:
                     return self.player
 
-        for i in range(7):
-            for j in range(6):
+        for i in range(7-3):
+            for j in range(6-3):
                 if board[j][i] == board[j+1][i+1] and board[j+1][i+1] == board[j+2][i+2] and board[j+2][i+2] == board[j+3][i+3] and board[j][i] == player:
                     return self.player
 
-        for i in range(7):
-            for j in range(6):
-                if board[j][i] == board[j-1][i-1] and board[j-1][i-1] == board[j-2][i-2] and board[j-2][i-2] == board[j-3][i-3] and board[j][i] == player:
+        for i in range(7-3):
+            for j in range(3, 6):
+                if board[j][i] == board[j-1][i+1] and board[j-1][i+1] == board[j-2][i+2] and board[j-2][i+2] == board[j-3][i+3] and board[j][i] == player:
                         return self.player
 
     def player_click(self, posx, board, player):
@@ -49,6 +49,7 @@ class Game:
         elif posx < 500 and posx > 400:
             self.move(player, 4, self.last_open_position(board, 4))
         elif posx < 600 and posx > 500:
+            print('used')
             self.move(player, 5, self.last_open_position(board, 5))
 
     def last_open_position(self, board, x):
@@ -83,6 +84,7 @@ class Game:
                         self.bd.draw_board(self.board, self.player)
                         if self.win(self.player) == 1:
                             print("red wins")
+                            sys.exit()
                     else:
                         # yellow
                         self.player = 2
@@ -90,6 +92,7 @@ class Game:
                         self.bd.draw_board(self.board, self.player )
                         if self.win(self.player) == 2:
                             print("yellow wins")
+                            sys.exit()
 
                     self.player += 1
                     self.player = self.player % 2
