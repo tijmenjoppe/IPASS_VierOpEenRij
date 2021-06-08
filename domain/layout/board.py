@@ -17,7 +17,7 @@ class Board:
         self.gameDisplay = pg.display.set_mode((self.height, self.width))
 
     def print_board(self, board):
-        print( np.flip( board, 0 ) )
+        print(board)
 
     def first_screen(self):
         initiating_window = pg.image.load("vieropeenrijcoveredit.png")
@@ -29,6 +29,7 @@ class Board:
         self.gameDisplay.fill(self.black)
 
     def draw_board(self, board, player):
+        np.flip(board, 0)
         for i in range(7):
             for j in range(6):
                 x = i * 100 + 100 / 2
@@ -38,7 +39,7 @@ class Board:
 
         for i in range(7):
             x = i * 100 + 100 / 2
-            y = 100/ 2
+            y = 100 / 2
             if player == 1:
                 pg.draw.circle( self.gameDisplay, self.red, (x, y), 100 / 2 - 5 )
             if player == 2:

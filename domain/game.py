@@ -23,24 +23,24 @@ class Game:
 
     def player_click(self, posx, posy, board, player):
         if posx < 100:
-            self.move(player, 0, self.last_open_position(board, 1))
+            self.move(player, 0, self.last_open_position(board, 0))
         elif posx < 200 and posx > 100:
-            self.move(player, 1, self.last_open_position(board, 2))
+            self.move(player, 1, self.last_open_position(board, 1))
         elif posx < 300 and posx > 200:
-            self.move(player,2, self.last_open_position(board, 3))
+            self.move(player,2, self.last_open_position(board, 2))
         elif posx < 400 and posx > 300:
-            self.move(player, 3, self.last_open_position(board, 4))
+            self.move(player, 3, self.last_open_position(board, 3))
         elif posx < 500 and posx > 400:
-            self.move(player, 4, self.last_open_position(board, 5))
+            self.move(player, 4, self.last_open_position(board, 4))
         elif posx < 600 and posx > 500:
-            self.move(player, 5, self.last_open_position(board, 6))
+            self.move(player, 5, self.last_open_position(board, 5))
 
     def last_open_position(self, board, x):
-        for i in board[x]:
-            if i == 1 or i == 2:
+        for index, row in enumerate( board ):
+            if row[x] == 1 or row[x] == 2:
                 continue
             else:
-                return i
+                return index
 
     def move(self, player, x, y):
         print(player, x, y)
