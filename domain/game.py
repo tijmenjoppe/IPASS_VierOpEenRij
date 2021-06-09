@@ -12,6 +12,8 @@ class Game:
         self.bd = board.Board()
         self.board = np.zeros((6, 7))
         self.player = 0
+        self.gamemode = 0
+        self.ai = 0
 
 
     def win(self, player):
@@ -54,7 +56,6 @@ class Game:
 
     def last_open_position(self, board, x):
         for index, row in enumerate(board):
-            print(index,row[x])
             if row[x] == 1 or row[x] == 2:
                 continue
             else:
@@ -65,15 +66,11 @@ class Game:
             return -1
         self.board[int(y)][x] = player
 
-    def connect_four_game(self):
-
-        pg.init()
-        self.bd.first_screen()
-        self.bd.draw_board(self.board, self.player)
+    def game_loop(self):
+        self.bd.gameDisplay.fill( self.bd.black )
+        self.bd.draw_board( self.board, self.player )
         pg.display.update()
-
         while True:
-
             for event in pg.event.get():
                 if event.type == QUIT:
                     pg.quit()
@@ -82,23 +79,64 @@ class Game:
                     posx, posy = pg.mouse.get_pos()
                     if self.player == 1:
                         # red
-                        self.bd.print_board(self.board)
-                        self.player_click(posx, self.board, self.player )
-                        self.bd.draw_board(self.board, self.player)
-                        if self.win(self.player) == 1:
-                            print("red wins")
+                        self.player_click( posx, self.board, self.player )
+                        self.bd.draw_board( self.board, self.player )
+                        if self.win( self.player ) == 1:
+                            self.bd.print_board( self.board )
+                            print( "red wins" )
                             sys.exit()
                     else:
                         # yellow
                         self.player = 2
-                        self.player_click(posx, self.board, self.player)
-                        self.bd.draw_board(self.board, self.player )
-                        if self.win(self.player) == 2:
-                            print("yellow wins")
+                        self.player_click( posx, self.board, self.player )
+                        self.bd.draw_board( self.board, self.player )
+                        if self.win( self.player ) == 2:
+                            self.bd.print_board( self.board )
+                            print( "yellow wins" )
                             sys.exit()
-
+                    self.bd.print_board( self.board )
                     self.player += 1
                     self.player = self.player % 2
+
+    def connect_four_game(self):
+
+        pg.init()
+        self.bd.first_screen()
+        pg.display.update()
+        self.bd.first_menu()
+        pg.display.update()
+
+        while self.gamemode == 0:
+            for event in pg.event.get():
+                if event.type == QUIT:
+                    pg.quit()
+                    sys.exit()
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    posx, posy = pg.mouse.get_pos()
+                    if posx < 350:
+                        self.bd.ai_menu()
+                        while self.gamemode == 0:
+                            for event in pg.event.get():
+                                if event.type == QUIT:
+                                    pg.quit()
+                                    sys.exit()
+                                if event.type == pg.MOUSEBUTTONDOWN:
+                                    posx, posy = pg.mouse.get_pos()
+                                    if posx < 350:
+                                        self.gamemode = 1
+                                        self.player = 2
+                                        self.ai = 1
+                                        self.game_loop()
+                                    else:
+                                        self.gamemode = 1
+                                        self.player = 1
+                                        self.ai = 2
+                                        self.game_loop()
+                    else:
+                        self.gamemode = 1
+                        self.game_loop()
+
+
 
 
 

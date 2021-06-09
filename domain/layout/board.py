@@ -15,9 +15,11 @@ class Board:
         self.height = 700
         self.width = 700
         self.gameDisplay = pg.display.set_mode((self.height, self.width))
+        self.set_difficulty = None
+        self.start_the_game = None
 
     def print_board(self, board):
-        print(board)
+        print(np.flip(board))
 
     def first_screen(self):
         initiating_window = pg.image.load("vieropeenrijcoveredit.png")
@@ -25,10 +27,32 @@ class Board:
         pg.display.set_caption("Connect Four")
         self.gameDisplay.blit(initiating_window, (0, 0))
         pg.display.update()
-        time.sleep( 3 )
+        time.sleep(1)
         self.gameDisplay.fill(self.black)
 
+    def first_menu(self):
+        self.gameDisplay.fill(self.white)
+        lettertype = pg.font.SysFont( "monospace", 30 )
+        label_qstn = lettertype.render("Kies een gamemode", 1, self.black)
+        label_AI = lettertype.render( "VS AI", 1, self.black )
+        label_PLAYER = lettertype.render("VS PLAYER", 1, self.black)
+        self.gameDisplay.blit(label_AI, (150, 300))
+        self.gameDisplay.blit(label_PLAYER, (400, 300))
+        self.gameDisplay.blit(label_qstn, (200, 100))
+        pg.display.update()
+
+    def ai_menu(self):
+        self.gameDisplay.fill( self.white )
+        lettertype = pg.font.SysFont( "monospace", 30 )
+        label_qstn = lettertype.render( "Kies een kleur", 1, self.black )
+        label_AI = lettertype.render( "rood", 1, self.red )
+        label_PLAYER = lettertype.render( "geel", 1, self.yellow )
+        self.gameDisplay.blit( label_AI, (150, 300) )
+        self.gameDisplay.blit( label_PLAYER, (400, 300) )
+        self.gameDisplay.blit( label_qstn, (200, 100) )
+        pg.display.update()
     def draw_board(self, board, player):
+
         for i in range(7):
             for j in range(6):
                 x = i * 100 + 100 / 2
