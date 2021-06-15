@@ -1,3 +1,6 @@
+import random
+import math
+import numpy as np
 
 
 
@@ -11,7 +14,7 @@ class minimax:
             return position
 
         if maximizingPlayer:
-            maxEval = -100000
+            maxEval = -math.inf
             for option in position:
                 eval = self.minimax(option, depth - 1, alpha, beta, False)
                 maxEval = max(maxEval, eval)
@@ -20,7 +23,7 @@ class minimax:
                     break
             return maxEval
         else:
-            minEval = 100000
+            minEval = math.inf
             for option in position:
                 eval = self.minimax( option, depth - 1, alpha, beta, True )
                 minEval = min( minEval, eval )
@@ -28,3 +31,25 @@ class minimax:
                 if beta <= alpha:
                     break
             return minEval
+
+    def choice(self, options):
+        return random.choice(options)
+
+    def open_positions(self, board):
+        lst_options = []
+
+        for x in range( 7 ):
+            for y in range( 5, -1, -1 ):
+                if board[y][x] == 0.0:
+                    tuplexy = x, y
+                    lst_options.append( tuplexy )
+                    break
+        return lst_options
+
+    def evaluate_position(self, board):
+        pass
+
+    def score_position(self, row):
+        score = 0
+        if row.count() == 4:
+            score += math.inf

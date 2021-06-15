@@ -1,3 +1,4 @@
+from domain.minimax import algorithm
 from layout import board
 
 import pygame as pg
@@ -10,10 +11,12 @@ class Game:
 
     def __init__(self):
         self.bd = board.Board()
+        self.al = algorithm.minimax()
         self.board = np.zeros((6, 7))
         self.player = 0
         self.gamemode = 0
         self.ai = 0
+        self.game_turn = 0
 
 
     def win(self, player):
@@ -55,13 +58,17 @@ class Game:
             self.move(player, 6, self.last_open_position(board, 6))
 
     def last_open_position(self, board, x):
-        for index, row in enumerate(board):
-            if row[x] == 1 or row[x] == 2:
-                continue
-            else:
-                return index
+        for y in range( 5, -1, -1 ):
+            if board[y][x] == 0.0:
+                return y
+
+    def ai_move(self):
+        options = self.al.open_positions(self.board)
+        choice = self.al.choice(options)
+        self.move(self.ai, choice[0], choice[1])
 
     def move(self, player, x, y):
+        print(x,y)
         if y == None:
             return -1
         self.board[int(y)][x] = player
@@ -98,6 +105,37 @@ class Game:
                     self.player += 1
                     self.player = self.player % 2
 
+    def game_loop_ai(self):
+
+        self.bd.gameDisplay.fill( self.bd.black )
+        self.bd.draw_board( self.board, self.player )
+        pg.display.update()
+        while True:
+            for event in pg.event.get():
+                if event.type == QUIT:
+                    pg.quit()
+                    sys.exit()
+                if event.type == pg.MOUSEBUTTONDOWN:
+                    posx, posy = pg.mouse.get_pos()
+                    print(self.player, self.ai)
+                    self.player_click( posx, self.board, self.player )
+                    self.bd.draw_board( self.board, self.player )
+                    if self.win( self.player ) == self.player:
+                        self.bd.print_board( self.board )
+                        print( "player wins")
+                        time.sleep( 2 )
+                        sys.exit()
+                    print( "ai's turn" )
+                    self.ai_move()
+                    self.bd.draw_board( self.board, self.player )
+                    if self.win( self.ai ) == self.ai:
+                        self.bd.print_board( self.board )
+                        print( "AI wins" )
+                        time.sleep( 2 )
+                        sys.exit()
+                    self.bd.print_board( self.board )
+
+
     def connect_four_game(self):
 
         pg.init()
@@ -124,14 +162,14 @@ class Game:
                                     posx, posy = pg.mouse.get_pos()
                                     if posx < 350:
                                         self.gamemode = 1
-                                        self.player = 2
-                                        self.ai = 1
-                                        self.game_loop()
-                                    else:
-                                        self.gamemode = 1
                                         self.player = 1
                                         self.ai = 2
-                                        self.game_loop()
+                                        self.game_loop_ai()
+                                    else:
+                                        self.gamemode = 1
+                                        self.player = 2
+                                        self.ai = 1
+                                        self.game_loop_ai()
                     else:
                         self.gamemode = 1
                         self.game_loop()
