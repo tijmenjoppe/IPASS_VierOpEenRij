@@ -1,3 +1,5 @@
+import math
+
 from domain.minimax import algorithm
 from layout import board
 
@@ -63,9 +65,10 @@ class Game:
                 return y
 
     def ai_move(self):
-        options = self.al.open_positions(self.board)
-        choice = self.al.choice(options)
-        self.move(self.ai, choice[0], choice[1])
+        move = self.al.minimax(self.board, 5, -math.inf, math.inf, True, self.ai)[1]
+        self.move(self.ai, move[0], move[1])
+        print("AI move")
+
 
     def move(self, player, x, y):
         print(x,y)
