@@ -27,6 +27,11 @@ class Game_Loops:
         options = self.open_positions( board )
 
         if depth == 0 or self.terminal_node( board, player, ai ):
+            if self.terminal_node(board, player, ai):
+                if self.win(player) == player:
+                    return -10000000, options
+                if self.win(ai) == ai:
+                    return 10000000, options
             return self.evaluate_position( board, ai ), options
 
         if maximizingPlayer:
@@ -34,8 +39,10 @@ class Game_Loops:
             bestOption = None
             for option in options:
                 board_copy = board.copy()
-                self.move( ai, option[ 0], option[1], board_copy )
+                self.move( ai, option[0], option[1], board_copy )
                 evalresult = self.minimax( board_copy, depth - 1, alpha, beta, False, ai, player )[0]
+                # if depth >= 2:
+                #     print(board_copy, depth, option, evalresult)
                 if evalresult > maxEval:
                     maxEval = evalresult
                     bestOption = option
@@ -52,6 +59,8 @@ class Game_Loops:
                 board_copy = board.copy()
                 self.move( player, option[0], option[1], board_copy )
                 evalresult = self.minimax( board_copy, depth - 1, alpha, beta, True, ai, player )[0]
+                # if depth >= 2:
+                    # print( board_copy, depth, option, evalresult  )
                 if evalresult < minEval:
                     minEval = evalresult
                     worstOption = option
@@ -116,25 +125,15 @@ class Game_Loops:
         opponent = self.player
 
         if lst.count( player ) == 4:
-            score += 100000000
-        elif lst.count( player ) == 3 and lst.count( 0 ) == 1:
+            score += 1000000000000000
+        if lst.count( player ) == 3 and lst.count( 0 ) == 1:
             score += 900
-        elif lst.count( player ) == 2 and lst.count( 0 ) == 2:
-            score += 500
-        elif lst.count( player ) == 1 and lst.count( 0 ) == 3:
-            score += 300
-        elif lst.count( player ) == 1 and lst.count( 0 ) == 2:
-            score += 200
-        elif lst.count( opponent ) == 2 and lst.count( 0 ) == 2:
-            score -= 500
-        elif lst.count( opponent ) == 1 and lst.count( 0 ) == 3:
-            score -= 300
-        elif lst.count( opponent ) == 1 and lst.count( 0 ) == 2:
-            score -= 200
+        if lst.count( player ) == 2 and lst.count(0) == 2:
+            score += 400
         if lst.count( opponent ) == 3 and lst.count( 0 ) == 1:
             score -= 900
         if lst.count( opponent ) == 4:
-            score -= 10000000
+            score -= 10000000000000000
 
         return score
 
@@ -144,25 +143,25 @@ class Game_Loops:
             for j in range( 6 ):
                 if b[j][i] == b[j][i + 1] and b[j][i + 1] == b[j][i + 2] and b[j][i + 2] == b[j][i + 3] and b[j][
                     i] == player:
-                    return self.player
+                    return player
 
         for i in range( 7 ):
             for j in range( 6 - 3 ):
                 if b[j][i] == b[j + 1][i] and b[j + 1][i] == b[j + 2][i] and b[j + 2][i] == b[j + 3][i] and b[j][
                     i] == player:
-                    return self.player
+                    return player
 
         for i in range( 7 - 3 ):
             for j in range( 6 - 3 ):
                 if b[j][i] == b[j + 1][i + 1] and b[j + 1][i + 1] == b[j + 2][i + 2] and b[j + 2][i + 2] == b[j + 3][
                     i + 3] and b[j][i] == player:
-                    return self.player
+                    return player
 
         for i in range( 7 - 3 ):
             for j in range( 3, 6 ):
                 if b[j][i] == b[j - 1][i + 1] and b[j - 1][i + 1] == b[j - 2][i + 2] and b[j - 2][i + 2] == b[j - 3][
                     i + 3] and b[j][i] == player:
-                    return self.player
+                    return player
 
     def player_click(self, posx, board, player):
         if posx < 100:
@@ -239,15 +238,16 @@ class Game_Loops:
                     if self.win( self.player ) == self.player:
                         self.bd.print_board( self.board )
                         print( "player wins" )
-                        time.sleep( 2 )
+                        time.sleep( 10 )
                         sys.exit()
+
                     print( "ai's turn" )
                     self.ai_move()
                     self.bd.draw_board( self.board, self.player )
                     if self.win( self.ai ) == self.ai:
                         self.bd.print_board( self.board )
                         print( "AI wins" )
-                        time.sleep( 2 )
+                        time.sleep( 10 )
                         sys.exit()
                     self.bd.print_board( self.board )
 
