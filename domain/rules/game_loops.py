@@ -66,12 +66,13 @@ class Game_Loops:
 
                     print( "ai's turn" )
                     self.gm.ai_move()
-                    self.bd.draw_board( self.gm.board, self.gm.player )
+                    self.bd.draw_board( self.gm.board, self.gm.ai )
                     if self.gm.win( self.gm.ai ) == self.gm.ai :
                         print( "AI wins" )
                         time.sleep( 10 )
                         sys.exit()
-                    self.bd.draw_board( self.gm.board, self.gm.player )
+                    print( "Players turn" )
+                    self.bd.draw_board( self.gm.board, self.gm.ai )
 
     def connect_four_game(self):
         '''This is the game itself. you can choose one of the two game loops and play the game connect four'''
