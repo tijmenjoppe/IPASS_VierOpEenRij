@@ -1,10 +1,7 @@
-import math
-from layout import board
-from rules import game
-import random
+from domain.layout import board
+from domain.rules import game
 import pygame as pg
 import sys
-import numpy as np
 from pygame.locals import *
 import time
 
@@ -74,6 +71,7 @@ class Game_Loops:
                         print( "AI wins" )
                         time.sleep( 10 )
                         sys.exit()
+                    self.bd.draw_board( self.gm.board, self.gm.player )
 
     def connect_four_game(self):
         '''This is the game itself. you can choose one of the two game loops and play the game connect four'''

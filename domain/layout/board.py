@@ -1,6 +1,4 @@
 import pygame as pg
-import sys
-from pygame.locals import *
 import time
 import numpy as np
 

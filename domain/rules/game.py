@@ -1,8 +1,6 @@
 import math
 import random
-
 import numpy as np
-
 from domain.layout import board
 
 
@@ -51,7 +49,7 @@ class Game_Rules:
                     maxEval = evalresult
                     bestOption = option
                 maxEval = max( maxEval, evalresult )
-                alpha = max( alpha, evalresult )
+                alpha = max( alpha, maxEval )
                 if beta <= alpha:
                     break
             return maxEval, bestOption
@@ -70,7 +68,7 @@ class Game_Rules:
                     minEval = evalresult
                     worstOption = option
                 minEval = min( minEval, evalresult )
-                beta = min( beta, evalresult )
+                beta = min( beta, minEval )
                 if beta <= alpha:
                     break
             return minEval, worstOption
