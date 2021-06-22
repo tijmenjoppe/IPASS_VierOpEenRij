@@ -20,7 +20,7 @@ class Game_Rules:
         ''' call the minimax algorithm to make a move'''
         move = self.minimax( self.board, 5, -math.inf, math.inf, True, self.ai, self.player )[1]
         if self.move( self.ai, move[0], move[1], self.board ) is None:
-            return -1
+            return False
         else:
             self.move( self.ai, move[0], move[1], self.board )
         print( "AI move" )
@@ -44,6 +44,9 @@ class Game_Rules:
                 board_copy = board.copy()
                 self.move( ai, option[0], option[1], board_copy )
                 evalresult = self.minimax( board_copy, depth - 1, alpha, beta, False, ai, player )[0]
+                ''' uncomment this to check the working of the algorithm'''
+                # if depth >= 5:
+                #     print(depth, board, evalresult, option)
                 if evalresult > maxEval:
                     maxEval = evalresult
                     bestOption = option
@@ -60,6 +63,9 @@ class Game_Rules:
                 board_copy = board.copy()
                 self.move( player, option[0], option[1], board_copy )
                 evalresult = self.minimax( board_copy, depth - 1, alpha, beta, True, ai, player )[0]
+                ''' uncomment this to check the working of the algorithm'''
+                # if depth >= 5:
+                #     print(depth, board, evalresult, option)
                 if evalresult < minEval:
                     minEval = evalresult
                     worstOption = option
