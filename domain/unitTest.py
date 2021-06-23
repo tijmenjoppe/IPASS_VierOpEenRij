@@ -1,41 +1,45 @@
 import numpy as np
-from domain.rules import game_loops
-import numpy as np
 from domain.rules import game
-
-board = np.zeros( (6, 7) )
-
-player = 1
-ai = 2
-
-gm = game.Game_Rules()
-
-gm.player = 1
-gm.ai = 2
-def function_test_open_positions():
-    print('''the function open_positions looks for all possible moves for the AI. In an empty board you asume its 7 moves the computer can make''')
-    print('is the length of the list of open positions 7?')
-    print( len(gm.open_positions( board )) == 7 )
-    print(''' if we fill a column there should only be six possible moves''')
-    print('Here we test the Move function that will place a piece if you give its coordinates')
-    print('I loop through and add 1 on the y')
-    for i in range(6):
-        gm.move(player, 0, i, board)
-        print(board)
-    print('as you can see one column of the board is now filled.')
-    print('is the length of the list of open positions still 7?')
-    print( len(gm.open_positions( board )) == 7 )
+import unittest
 
 
-def function_test_evaluate_position():
-    board = np.zeros( (6, 7))
-    print('This function will evaluate a board state')
-    print(" I am going to place an piece in the middle, for its a strong position to hold.")
-    print("the calculation is for every piece in the middle from the AI you get 200 points")
-    gm.move(ai, 3, 5, board)
-    print(board)
-    print(" is the score of the positions 200?")
-    print(gm.evaluate_position(board, ai) ==  200)
+class TestStringMethods( unittest.TestCase ):
 
-function_test_open_positions()
-function_test_evaluate_position()
+    def test_function_test_open_positions(self):
+        self.board = np.zeros( (6, 7) )
+        self.player = 1
+        self.ai = 2
+        self.gm = game.Game_Rules()
+        self.gm.player = 1
+        self.gm.ai = 2
+        """ the function open_positions looks for all possible moves for the AI. In an empty board you assume its 7
+        moves the computer can make  is the length of the list of open positions 7? """
+        self.assertEqual( len( self.gm.open_positions( self.board ) ), 7 )
+        """ if we fill a column there should only be six possible moves Here we test the Move function that will place 
+        a piece if you give its coordinates I loop through and add 1 on the y """
+        for i in range( 6 ):
+            self.gm.move( self.player, 0, i, self.board )
+            print( self.board )
+        '''as you can see one column of the board is now filled.
+        is the length of the list of open positions 6?'''
+        self.assertEqual( len( self.gm.open_positions( self.board ) ), 6 )
+
+    def test_function_test_evaluate_position(self):
+        self.board = np.zeros( (6, 7) )
+        self.player = 1
+        self.ai = 2
+        self.gm = game.Game_Rules()
+        self.gm.player = 1
+        self.gm.ai = 2
+        self.board = np.zeros( (6, 7) )
+        '''This function will evaluate a board state
+        I am going to place an piece in the middle, for its a strong position to hold.
+        the calculation is for every piece in the middle from the AI you get 200 points'''
+        self.gm.move( self.ai, 3, 5, self.board )
+        print( self.board )
+        '''is the score of the positions 200?'''
+        self.assertEqual( self.gm.evaluate_position( self.board, self.ai ), 200 )
+
+
+if __name__ == '__main__':
+    unittest.main()
